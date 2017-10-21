@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "905891159167",
+    "firebase_url": "https://reclamos-d7bb3.firebaseio.com",
+    "project_id": "reclamos-d7bb3",
+    "storage_bucket": "reclamos-d7bb3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:905891159167:android:3a16fb3aad4b2848",
+        "android_client_info": {
+          "package_name": "ar.com.erzsoftware.eruralmovil"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "905891159167-ugt5spl56hmn2ehmovjkerotsas99gq7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ar.com.erzsoftware.eruralmovil",
+            "certificate_hash": "0c9c336315feef94a3fdf6eb0a2bc33b1f27b005"
+          }
+        },
+        {
+          "client_id": "905891159167-j7hqrtmq90nelhsp3eai1apln9delmur.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsGPajNe_KHbC6dhJl1qu5PZv7xQwwJkk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "905891159167-j7hqrtmq90nelhsp3eai1apln9delmur.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

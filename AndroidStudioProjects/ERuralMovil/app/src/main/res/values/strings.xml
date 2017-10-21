@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Elec. Rural Movil</string>
+    <string name="title_activity_listado">Elec. Rural Movil- Facturas</string>
+    <string name="title_activity_lecturasbrw">Elec. Rural Movil- Lecturas</string>
+    <string name="title_activity_pppp">pppp</string>
+    <string name="title_activity_lecturas_add_edit">Elec. Rural Movil-Lecturas Enviar</string>
+</resources>
