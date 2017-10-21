@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 if (txtempresa.length() != 0) {
                     mictrPrincipal.Ingresar(getBaseContext(), view, txtclie.getText(), txtpass.getText(), MainActivity.this);
                 }else{
-                    Snackbar.make(view, "No ha seleccionado ninguna empresa", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                    Snackbar.make(view, "No ha seleccionado ninguna empresa. Favor de Seleccionar", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 }
             } else {
 
