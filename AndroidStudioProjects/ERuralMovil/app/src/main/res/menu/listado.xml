@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".listado"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_listado"
+        android:checkable="false"
+
+        android:title="Opciones de Facturas"
+        app:showAsAction="always|withText"></item>
+    <!-- menu group -->
+    <group android:id="@+id/group_listado_click">
+        <item
+            android:id="@+id/menu_listado_descargar"
+            android:icon="@android:drawable/stat_sys_download"
+            android:title="Descargar"
+            app:showAsAction="always|withText" />
+        <item
+            android:id="@+id/menu_listado_ver"
+            android:icon="@android:drawable/ic_menu_view"
+            android:title="Ver"
+            app:showAsAction="always|withText" />
+
+    </group>
+
+</menu>

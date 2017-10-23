@@ -18,14 +18,19 @@ import android.print.PrintDocumentInfo;
 import android.print.pdf.PrintedPdfDocument;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.util.AsyncListUtil;
 import android.util.Base64;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -68,8 +73,10 @@ public class listado extends AppCompatActivity {
         setContentView(R.layout.content_listado);
         Intent intent = getIntent();
         dbfact = new FacturasDB(getBaseContext());
+        lvstring = (ListView) findViewById(R.id.ListView_listado);
 
         CargarFacturas();
+
 
 
     }
@@ -77,7 +84,6 @@ public class listado extends AppCompatActivity {
 //=============================================
         datos= dbfact.Listado();
 
-        lvstring = (ListView) findViewById(R.id.ListView_listado);
         lvstring.setAdapter(new MisFacturas(this, R.layout.activity_mis__facturas, datos){
             @Override
             public void onEntrada(Object entrada, View view) {
@@ -119,125 +125,134 @@ public class listado extends AppCompatActivity {
         lvstring.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            return false;
+            }
+        });
+        lvstring.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+            @Override
+            public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
 
-                Object listItem = lvstring.getItemAtPosition(position);
-                String per = ((Factura) listItem).getPerasto();
-                String nro = ((Factura) listItem).getNroasto();
+                MenuInflater inflater = getMenuInflater();
 
-
-                final ctrservices miservice = new ctrservices(getBaseContext());
-
-                final ProgressDialog pd;
-                pd = new ProgressDialog(listado.this);
-                pd.setTitle("Obteniendo Factura...");
-                //pd.setIcon();
-                pd.setMessage("Aguarde unos instantes...");
-                pd.setIndeterminate(false);
-                pd.setCancelable(false);
-                pd.show();
+                inflater.inflate(R.menu.listado, contextMenu);
 
 
-                miservice.setBaseContext(getBaseContext());
-                miservice.VerFacturasPDF(getBaseContext(),per,nro );
-                Runnable miExe = new Runnable() {
-                    public void run() {
-                        int i = 0;
-                        do {
-                            i = miservice.getRespuestas().length();
+            }
 
-                        } while (i == 0);
+        });
 
-                        try {
-                            String id = "-1";
-                            String Empresa = "Error";
+    }
 
-                            JSONArray respuesta = new JSONArray(miservice.getRespuestas());
+    public void DescargarPDF(String per, String nro){
 
-                            for (i = 0; i < respuesta.length(); i++) {
-                                // [{"Id":"-1","Empresa":"No se pueden obtener los datos"}]
+//        Object listItem = lvstring.getItemAtPosition(position);
+//        String per = ((Factura) listItem).getPerasto();
+//        String nro = ((Factura) listItem).getNroasto();
 
-                                JSONObject jsonobject = respuesta.getJSONObject(i);
-                                if (jsonobject.has("Id")) {
-                                    id = jsonobject.getString("Id");
-                                }
-                                Empresa = jsonobject.getString("Empresa");
 
-                                if (id.equals("-1")) {
-                                } else {
-                                    FacturaPDF fact = new FacturaPDF();
-                                    fact.setdesdeJSONArray(jsonobject);
+        final ctrservices miservice = new ctrservices(getBaseContext());
+
+        final ProgressDialog pd;
+        pd = new ProgressDialog(listado.this);
+        pd.setTitle("Obteniendo Factura...");
+        //pd.setIcon();
+        pd.setMessage("Aguarde unos instantes...");
+        pd.setIndeterminate(false);
+        pd.setCancelable(false);
+        pd.show();
+
+
+        miservice.setBaseContext(getBaseContext());
+        miservice.VerFacturasPDF(getBaseContext(),per,nro );
+        Runnable miExe = new Runnable() {
+            public void run() {
+                int i = 0;
+                do {
+                    i = miservice.getRespuestas().length();
+
+                } while (i == 0);
+
+                try {
+                    String id = "-1";
+                    String Empresa = "Error";
+
+                    JSONArray respuesta = new JSONArray(miservice.getRespuestas());
+
+                    for (i = 0; i < respuesta.length(); i++) {
+                        // [{"Id":"-1","Empresa":"No se pueden obtener los datos"}]
+
+                        JSONObject jsonobject = respuesta.getJSONObject(i);
+                        if (jsonobject.has("Id")) {
+                            id = jsonobject.getString("Id");
+                        }
+                        Empresa = jsonobject.getString("Empresa");
+
+                        if (id.equals("-1")) {
+                        } else {
+                            FacturaPDF fact = new FacturaPDF();
+                            fact.setdesdeJSONArray(jsonobject);
 //============================================CREAR
-                                    String string64 = fact.getPdf();
-                                    Log.d("FacturasPDF",string64);
+                            String string64 = fact.getPdf();
+                            Log.d("FacturasPDF",string64);
 
-                                    try {
+                            try {
 
 
-                                        byte[] pdfAsBytes = Base64.decode(string64, 0);
-                                        //File filePath = new File(Environment.getDownloadCacheDirectory() + "/braodcasts.pdf");
-                                        File path= new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath());
+                                byte[] pdfAsBytes = Base64.decode(string64, 0);
+                                //File filePath = new File(Environment.getDownloadCacheDirectory() + "/braodcasts.pdf");
+                                File path= new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath());
 
-                                        String targetPdf = path+"/fact-"+ fact.getPeriodo()+fact.getPvcomp()+fact.getNrcomp() +".pdf";
-                                        Log.d("FacturasPDF",targetPdf);
+                                String targetPdf = path+"/fact-"+ fact.getPeriodo()+fact.getPvcomp()+fact.getNrcomp() +".pdf";
+                                Log.d("FacturasPDF",targetPdf);
 
-                                        FileOutputStream os = new FileOutputStream(targetPdf);
-                                        os.write(pdfAsBytes);
-                                        os.close();
+                                FileOutputStream os = new FileOutputStream(targetPdf);
+                                os.write(pdfAsBytes);
+                                os.close();
 //====abrir
-                                        File pdfFile = new File(targetPdf);//File path
-                                        if (pdfFile.exists()) //Checking for the file is exist or not
-                                        {
-                                            Uri path2 = Uri.fromFile(pdfFile);
-                                            Intent objIntent = new Intent(Intent.ACTION_VIEW);
-                                            objIntent.setDataAndType(path2, "application/pdf");
-                                            objIntent.setFlags(Intent. FLAG_ACTIVITY_CLEAR_TOP);
-                                            startActivity(objIntent);//Staring the pdf viewer
-                                        } else {
+                                File pdfFile = new File(targetPdf);//File path
+                                if (pdfFile.exists()) //Checking for the file is exist or not
+                                {
+                                    Uri path2 = Uri.fromFile(pdfFile);
+                                    Intent objIntent = new Intent(Intent.ACTION_VIEW);
+                                    objIntent.setDataAndType(path2, "application/pdf");
+                                    objIntent.setFlags(Intent. FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(objIntent);//Staring the pdf viewer
+                                } else {
 
-                                            Toast.makeText(getBaseContext(), "Archivo no existe! ", Toast.LENGTH_SHORT).show();
-
-                                        }
-
-                                    }catch(FileNotFoundException e) {
-                                        e.printStackTrace();
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-
-
-                                    //============================================CREAR
+                                    Toast.makeText(getBaseContext(), "Archivo no existe! ", Toast.LENGTH_SHORT).show();
 
                                 }
 
-
+                            }catch(FileNotFoundException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
 
 
-                        } catch (JSONException e) {
-                            Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                            //============================================CREAR
+
                         }
-                        pd.dismiss();
+
+
                     }
-                };
-                Thread miThread = new Thread(miExe);
-                miThread.start();
 
 
-//                Toast.makeText(getBaseContext(),lvstring.getItemAtPosition(index).toString(), Toast.LENGTH_LONG).show();
-                return false;
+                } catch (JSONException e) {
+                    Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+                pd.dismiss();
             }
-        });
-        lvstring.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Snackbar.make(view, "Para Descargar la Factura. Mantenga Presionado", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-            }
-        });
+        };
+        Thread miThread = new Thread(miExe);
+        miThread.start();
 
     }
+
     public void FacturasCerrar(View view){
         finish();
     }
+
     public void FacturasActualizar(View view){
         final ctrservices miservice = new ctrservices(getBaseContext());
 
@@ -283,4 +298,27 @@ public class listado extends AppCompatActivity {
         Thread miThread = new Thread(miExe);
         miThread.start();
     }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+
+        AdapterView.AdapterContextMenuInfo cmi =(AdapterView.AdapterContextMenuInfo) item.getMenuInfo ();
+        Object listItem = lvstring.getItemAtPosition(cmi.position);
+        String per = ((Factura) listItem).getPerasto();
+        String nro = ((Factura) listItem).getNroasto();
+
+        switch (item.getItemId()) {
+            case R.id.menu_listado_descargar:
+                Log.d("FacturasPDF","Descargar");
+                DescargarPDF(per,nro);
+                return true;
+            case R.id.menu_listado_ver:
+                Log.d("FacturasPDF","Ver");
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
+
 }
