@@ -80,6 +80,7 @@ public class listado extends AppCompatActivity {
 
 
     }
+
     public void CargarFacturas(){
 //=============================================
         datos= dbfact.Listado();

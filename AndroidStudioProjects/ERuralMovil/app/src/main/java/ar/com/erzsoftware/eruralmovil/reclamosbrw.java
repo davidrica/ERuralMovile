@@ -1,5 +1,6 @@
 package ar.com.erzsoftware.eruralmovil;
 
+import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -73,11 +74,11 @@ public class reclamosbrw extends AppCompatActivity {
             if (miauxi.getnroaux().equals(value.usuario)) {
                 datos.add(value);
                 //key
-                Log.d("Firebase", value.key);
+                //Log.d("Firebase", value.key);
 
             }
         }
-        Log.d("Firebase", String.valueOf(datos.size()));
+        //Log.d("Firebase", String.valueOf(datos.size()));
         if (!datos.isEmpty()) {
 
             lvstring = (ListView) findViewById(R.id.ListView_reclamos);
@@ -116,4 +117,10 @@ public class reclamosbrw extends AppCompatActivity {
     }
     //here we maintain our products in various departments
     public void ReclamosCerrar(View view){finish();}
+
+    public void ReclamosAdd(View view){
+        Intent intent = new Intent(getBaseContext(), reclamosadd.class);
+        startActivity(intent);
+        finish();
+    }
 }
