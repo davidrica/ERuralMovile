@@ -13,6 +13,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 
 import ar.com.erzsoftware.eruralmovil.MainActivity;
@@ -261,13 +264,15 @@ public class ctrPrincipal {
 
                 }while(i == 0);
 
+                String id = "-1";
+                String msj = "Error desconocido.";
+                
+
                 try {
 
-
                     //pd.dismiss();
-                    String id = "-1";
-                    String msj = "Error desconocido.";
-                    Log.d("Ingresar Crtprincipal",miservice.getRespuestas());
+                    //Log.d("Ingresar Crtprincipal",miservice.getRespuestas());
+                    //Toast.makeText(BaseContext, miservice.getRespuestas(), Toast.LENGTH_LONG).show();
                     JSONArray respuesta = new JSONArray(miservice.getRespuestas());
                     for (i = 0; i < respuesta.length(); i++) {
 
@@ -296,8 +301,9 @@ public class ctrPrincipal {
                 } catch (JSONException e) {
                     e.printStackTrace();
 
-                    //Toast.makeText(BaseContext, e.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(BaseContext, msj, Toast.LENGTH_LONG).show();
                 }
+
                 pd.dismiss();
             }
         };

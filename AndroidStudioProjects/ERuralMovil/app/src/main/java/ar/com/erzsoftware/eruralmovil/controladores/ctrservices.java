@@ -105,8 +105,8 @@ public class ctrservices {
     public void setAddReclamos(String addReclamos) {AddReclamos = addReclamos;}
 
     public ctrservices(Context context) {
-        this.miurl = "http://10.0.0.3/validar/";
-        //this.miurl="http://186.109.91.169/validar/";
+        //this.miurl = "http://10.0.0.3/validar/";
+        this.miurl="http://186.109.91.169/validar/";
         this.findAbonado = "buscarabonado.php";
         this.findFacturas = "buscarfacturas.php";
         this.findFacturasPDF = "buscarfacturaspdf.php";
@@ -241,8 +241,7 @@ public class ctrservices {
         //String Url="http://186.109.91.169/validar/buscarabonado.php";
 
         final RequestParams params = new RequestParams();
-        Log.d("Ingresar", String.valueOf(nCli));
-        Log.d("Ingresar", String.valueOf(pass));
+
         params.add("ncli", String.valueOf(nCli));
         params.add("ndoc", String.valueOf(pass));
 
@@ -256,7 +255,8 @@ public class ctrservices {
 
                     String res = new String(responseBody);
                     respuestas = (String) res;
-                    Log.d("Ingresar", respuestas);
+                    //Log.d("Ingresar", respuestas);
+                    //Toast.makeText(BaseContext, respuestas, Toast.LENGTH_LONG).show();
                     // loopjListener.taskCompleted(res);
 
                 }
