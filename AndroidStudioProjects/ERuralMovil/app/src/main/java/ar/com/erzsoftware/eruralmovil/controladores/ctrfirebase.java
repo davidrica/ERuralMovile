@@ -17,11 +17,13 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executor;
 
 import ar.com.erzsoftware.eruralmovil.MainActivity;
 import ar.com.erzsoftware.eruralmovil.modelos.empresa;
 import ar.com.erzsoftware.eruralmovil.modelos.firereclamos;
 import ar.com.erzsoftware.eruralmovil.modelos.temas;
+import ar.com.erzsoftware.eruralmovil.reclamosadd;
 
 /**
  * Created by Administrador on 19/10/2017.
@@ -134,28 +136,8 @@ public class ctrfirebase {
             }
         });
 
-        this.mAuthListener = new FirebaseAuth.AuthStateListener() {
-
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    // User is signed in
-                    Log.d("Firebase","onAuthStateChanged:signed_in:" + user.getUid());
-                } else {
-                    // User is signed out
-                    Log.d("Firebase", "onAuthStateChanged:signed_out");
-
-                }
-                // ...
-            }
-        };
-        FireLogin();
    }
 
-    public void FireLogin() {
-        this.mAuth.signInWithEmailAndPassword(email, password);
-    }
 
 
     public DatabaseReference getRefGeneral() {return refGeneral;}

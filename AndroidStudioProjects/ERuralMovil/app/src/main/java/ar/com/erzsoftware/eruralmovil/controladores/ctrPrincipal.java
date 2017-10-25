@@ -27,6 +27,7 @@ import ar.com.erzsoftware.eruralmovil.modelos.Auxiliares;
 import ar.com.erzsoftware.eruralmovil.modelos.DatosDSN;
 import ar.com.erzsoftware.eruralmovil.modelos.Factura;
 import ar.com.erzsoftware.eruralmovil.modelos.empresa;
+import ar.com.erzsoftware.eruralmovil.modelos.firereclamos;
 import ar.com.erzsoftware.eruralmovil.modelos.lecturas;
 
 import static ar.com.erzsoftware.eruralmovil.MainActivity.mictrPrincipal;
@@ -64,6 +65,7 @@ public class ctrPrincipal {
         this.ctrfire    = new ctrfirebase();
 
     }
+
     public Context getContext() {return context;}
 
     public void setContext(Context context) {this.context = context;}
@@ -261,11 +263,12 @@ public class ctrPrincipal {
 
                 try {
 
+
                     //pd.dismiss();
                     String id = "-1";
                     String msj = "Error desconocido.";
-                    JSONArray respuesta = new JSONArray(miservice.getRespuestas());
                     Log.d("Ingresar Crtprincipal",miservice.getRespuestas());
+                    JSONArray respuesta = new JSONArray(miservice.getRespuestas());
                     for (i = 0; i < respuesta.length(); i++) {
 
                         JSONObject jsonobject = respuesta.getJSONObject(i);
@@ -318,4 +321,37 @@ public class ctrPrincipal {
     public void setAfireempresa(ArrayList<empresa> afireempresa) {this.afireempresa = afireempresa;}
 
     public void setDbempresa(EmpresasDB dbempresa) {this.dbempresa = dbempresa;}
+
+    public void EnviarReclamo(final Context BaseContext, View view, firereclamos miReclamo,AppCompatActivity activity){
+        final ctrservices miservice = this.getMiservice();
+
+
+        miservice.setBaseContext(BaseContext);
+
+
+        final ProgressDialog pd;
+        pd = new ProgressDialog(activity);
+        pd.setTitle("Enviando Reclamo..");
+        pd.setMessage("Aguarde unos instantes...");
+        pd.setIndeterminate(false);
+        pd.setCancelable(false);
+        pd.show();
+        miservice.EnviarReclamos(BaseContext, view, miReclamo);
+
+        Runnable miExe =new Runnable() {
+            public void run(){
+                int i=0;
+                do {
+                    i=miservice.getRespuestas().length();
+
+                }while(i == 0);
+
+                Log.d("Reclamos",miservice.getRespuestas());
+                pd.dismiss();
+            }
+        };
+        Thread miThread = new Thread(miExe);
+        miThread.start();
+
+    }
 }

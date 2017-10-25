@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".reclamos"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_reclamos"
+        android:checkable="false"
+
+        android:title="Opciones de Reclamos"></item>
+    <!-- menu group -->
+    <group android:id="@+id/group_reclamos_click">
+        <item
+            android:id="@+id/menu_reclamos_borrar"
+            android:title="Borrar Reclamo" />
+        <item
+            android:id="@+id/menu_reclamos_ver"
+            android:title="Ver" />
+        <item
+            android:id="@+id/menu_reclamos_modificar"
+            android:title="Modificar" />
+
+    </group>
+
+</menu>

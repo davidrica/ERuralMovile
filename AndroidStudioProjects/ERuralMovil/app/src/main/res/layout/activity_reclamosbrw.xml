@@ -47,6 +47,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
+
             android:text="Enviadoaaaa"
             android:textAlignment="viewStart"
             app:layout_constraintRight_toRightOf="parent"

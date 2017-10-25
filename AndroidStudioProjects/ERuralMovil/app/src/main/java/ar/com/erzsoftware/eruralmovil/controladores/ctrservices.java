@@ -14,6 +14,7 @@ import com.loopj.android.http.RequestParams;
 
 import ar.com.erzsoftware.eruralmovil.MainActivity;
 import ar.com.erzsoftware.eruralmovil.activity_Welcome;
+import ar.com.erzsoftware.eruralmovil.modelos.firereclamos;
 import cz.msebera.android.httpclient.Header;
 
 
@@ -29,6 +30,7 @@ public class ctrservices {
     protected String findArticulos;
     protected String findLecturas;
     protected String AddLecturas;
+    protected String AddReclamos;
 
     protected Context baseContext;
     protected String respuestas = "";
@@ -98,6 +100,10 @@ public class ctrservices {
 
     public void setAddLecturas(String addLecturas) {AddLecturas = addLecturas;}
 
+    public String getAddReclamos() {return AddReclamos;}
+
+    public void setAddReclamos(String addReclamos) {AddReclamos = addReclamos;}
+
     public ctrservices(Context context) {
         this.miurl = "http://10.0.0.3/validar/";
         //this.miurl="http://186.109.91.169/validar/";
@@ -108,6 +114,7 @@ public class ctrservices {
         this.findArticulos = "buscararti.php";
         this.findLecturas = "buscarlecturas.php";
         this.AddLecturas = "lecturas.php";
+        this.AddReclamos = "enviar.php";
 
         this.context = context;
         //this.loopjListener = listener;
@@ -236,7 +243,6 @@ public class ctrservices {
         final RequestParams params = new RequestParams();
         Log.d("Ingresar", String.valueOf(nCli));
         Log.d("Ingresar", String.valueOf(pass));
-
         params.add("ncli", String.valueOf(nCli));
         params.add("ndoc", String.valueOf(pass));
 
@@ -323,6 +329,41 @@ public class ctrservices {
                     String res = new String(responseBody);
                     respuestas = (String) res;
                     Log.d("LECTURAS",res);
+                }
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                Toast.makeText(BaseContext, error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    public void EnviarReclamos(final Context BaseContext, View view, firereclamos miReclamo){
+
+        respuestas="";
+        final String Url = this.getMiurl() + this.getAddReclamos();
+
+
+        final RequestParams params = new RequestParams();
+
+        params.add("nrousuario", miReclamo.usuario);
+        params.add("telefono", miReclamo.telefono);
+        params.add("tema", miReclamo.tema);
+        params.add("descripcion", miReclamo.descripcion);
+
+        AsyncHttpClient cliente = new AsyncHttpClient();
+
+        cliente.get(Url, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
+                if (statusCode == 200) {
+
+                    String res = new String(responseBody);
+                    respuestas = (String) res;
+                    Log.d("Reclamos",res);
                 }
 
             }

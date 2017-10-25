@@ -1,15 +1,21 @@
 package ar.com.erzsoftware.eruralmovil;
 
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
@@ -31,6 +37,7 @@ public class reclamosadd extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reclamosadd);
+
         edFecha=(TextView)findViewById(R.id.edAddReclamosFecha);
         edDescr=(EditText)findViewById(R.id.edAddReclamosDesc);
         spTemas = (Spinner) findViewById(R.id.spTemas);
@@ -44,20 +51,17 @@ public class reclamosadd extends AppCompatActivity {
         spTemas.setAdapter(adp1);
 
     }
+
+
     public void ReclamosCerrar(View view){finish();}
 
     public void ReclamosEnviar(View view){
-        firereclamos mi = new firereclamos();
+
         DatabaseReference myRef = mictrPrincipal.getCtrfire().getRefReclamos();
 
-        mictrPrincipal.getCtrfire().FireLogin();
-/*
-        note.setUid(database.child("notes").push().getKey());
-        note.setTitle(titleTextView.getText().toString());
-        note.setDescription(descriptionTextView.getText().toString());
+        firereclamos mi = new firereclamos();
 
-        database.child("notes").child(note.getUid()).setValue(note);
-*/
+
         mi.key = myRef.push().getKey();
 
         mi.descripcion=edDescr.getText().toString();
@@ -69,8 +73,7 @@ public class reclamosadd extends AppCompatActivity {
         mi.telefono="asdf";
 
         myRef.child(mi.key).setValue(mi);
+        Log.d("Firebase", "fin");
 
-
-        //idNuevoReclamo.setValue(mi);
     }
 }

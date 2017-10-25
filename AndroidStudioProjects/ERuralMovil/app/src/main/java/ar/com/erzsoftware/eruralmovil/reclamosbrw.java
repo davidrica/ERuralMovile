@@ -5,6 +5,9 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ExpandableListView;
@@ -88,18 +91,39 @@ public class reclamosbrw extends AppCompatActivity {
                 @Override
                 public void onEntrada(Object entrada, View view) {
                     if (entrada != null) {
-                    TextView texto_superior_entrada = view.findViewById(R.id.txtReclamoFecha);
-                    if (texto_superior_entrada != null) {
-                        texto_superior_entrada.setText(((firereclamos) entrada).fecha);
-                    }
-                    TextView texto_inferior_entrada = view.findViewById(R.id.txtReclamoTema);
-                    if (texto_inferior_entrada != null) {
-                        texto_inferior_entrada.setText(((firereclamos) entrada).tema);
-                    }
-                    TextView actual= view.findViewById(R.id.txtReclamoEstado);
-                    if (actual != null) {
-                        actual.setText(((firereclamos) entrada).estado);
-                    }
+                        int colEnviado = 0xFFCC0000;
+                        int colAceptado= 0xFF669900;
+                        int colListo   = 0xFF669900;
+
+                        String fecha =((firereclamos) entrada).fecha;
+                        String tema=((firereclamos) entrada).tema;
+                        String estado=((firereclamos) entrada).estado;
+
+                        TextView texto_superior_entrada = view.findViewById(R.id.txtReclamoFecha);
+                        TextView texto_inferior_entrada = view.findViewById(R.id.txtReclamoTema);
+                        TextView actual                 = view.findViewById(R.id.txtReclamoEstado);
+
+                        if (texto_superior_entrada != null) {
+                            texto_superior_entrada.setText(fecha);
+                        }
+                        if (texto_inferior_entrada != null) {
+                            texto_inferior_entrada.setText(tema);
+                        }
+                        if (actual != null) {
+                            actual.setText(estado);
+                            Log.d("Firebase",estado);
+                            if (estado.equals("ENVIADO")){
+                                actual.setTextColor(colEnviado);
+                            }
+                            if (estado.equals("ACEPTADO")){
+                                actual.setTextColor(colAceptado);
+                            }
+                            if (estado.equals("LISTO")){
+                                actual.setTextColor(colListo);
+                            }
+
+
+                        }
 
                     }
               }
@@ -112,6 +136,18 @@ public class reclamosbrw extends AppCompatActivity {
 //                    Snackbar.make(view, "Buenas " +fireestado , Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 }
             });
+            lvstring.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+                @Override
+                public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+
+                    MenuInflater inflater = getMenuInflater();
+
+                    inflater.inflate(R.menu.reclamos, contextMenu);
+
+
+                }
+
+            });
         }
 
     }
@@ -122,5 +158,27 @@ public class reclamosbrw extends AppCompatActivity {
         Intent intent = new Intent(getBaseContext(), reclamosadd.class);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+
+        AdapterView.AdapterContextMenuInfo cmi =(AdapterView.AdapterContextMenuInfo) item.getMenuInfo ();
+        Object listItem = lvstring.getItemAtPosition(cmi.position);
+
+        switch (item.getItemId()) {
+            case R.id.menu_reclamos_borrar:
+                Log.d("Reclamos","borrar");
+                //DescargarPDF(per,nro);
+                return true;
+            case R.id.menu_reclamos_ver:
+                Log.d("Reclamos","Ver");
+                return true;
+            case R.id.menu_reclamos_modificar:
+                Log.d("Reclamos","Modificar");
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
     }
 }
