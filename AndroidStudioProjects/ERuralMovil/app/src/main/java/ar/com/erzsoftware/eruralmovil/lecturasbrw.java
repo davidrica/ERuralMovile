@@ -1,32 +1,18 @@
 package ar.com.erzsoftware.eruralmovil;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 import ar.com.erzsoftware.eruralmovil.controladores.ctrPrincipal;
-import ar.com.erzsoftware.eruralmovil.controladores.ctrservices;
-import ar.com.erzsoftware.eruralmovil.datos.FacturasDB;
 import ar.com.erzsoftware.eruralmovil.datos.LecturasDB;
-import ar.com.erzsoftware.eruralmovil.datos.erural;
 import ar.com.erzsoftware.eruralmovil.modelos.Auxiliares;
-import ar.com.erzsoftware.eruralmovil.modelos.Factura;
-import ar.com.erzsoftware.eruralmovil.modelos.MisLecturas;
+import ar.com.erzsoftware.eruralmovil.BaseAdapters.MisLecturas;
 import ar.com.erzsoftware.eruralmovil.modelos.lecturas;
 
 public class lecturasbrw extends AppCompatActivity {

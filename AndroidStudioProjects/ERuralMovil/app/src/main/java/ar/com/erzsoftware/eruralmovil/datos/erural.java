@@ -42,11 +42,9 @@ public class erural extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL( TablaFacts  );
-
-        sqLiteDatabase.execSQL(TablaFactsIndex  );
+        sqLiteDatabase.execSQL( TablaFactsIndex  );
 
         sqLiteDatabase.execSQL( TablaAuxis);
-
         sqLiteDatabase.execSQL( TablaAuxisIndex );
 
         sqLiteDatabase.execSQL(TablaLecturas );

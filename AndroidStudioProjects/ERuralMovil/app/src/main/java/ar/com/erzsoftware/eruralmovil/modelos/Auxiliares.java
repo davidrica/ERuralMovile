@@ -4,6 +4,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import ar.com.erzsoftware.eruralmovil.BaseAdapters.MisFacturas;
+
 /**
  * Created by Administrador on 19/09/2017.
  */

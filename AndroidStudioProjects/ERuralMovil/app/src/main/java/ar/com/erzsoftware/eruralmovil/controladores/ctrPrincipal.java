@@ -3,6 +3,7 @@ package ar.com.erzsoftware.eruralmovil.controladores;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.util.Log;
@@ -50,7 +51,7 @@ public class ctrPrincipal {
     private FacturasDB dbfact;
     private ctrservices miservice;
     private ctrfirebase ctrfire;
-
+    private boolean ingreso;
     private ArrayList<Factura> AFacDatos = new ArrayList<Factura>();
     private ArrayList<lecturas> datoslect = new ArrayList<lecturas>();
     private ArrayList<empresa> afireempresa = new ArrayList<empresa>();
@@ -66,8 +67,12 @@ public class ctrPrincipal {
         this.miEmp      = dbempresa.ObtenerUltimaEmpresa();
         this.miservice  = new ctrservices(this.context) ;
         this.ctrfire    = new ctrfirebase();
-
+        this.ingreso    = false;
     }
+
+    public boolean getIngreso() {return ingreso;    }
+
+    public void setIngreso(boolean ingreso) {this.ingreso = ingreso;}
 
     public Context getContext() {return context;}
 
@@ -93,7 +98,7 @@ public class ctrPrincipal {
 
     public void setDblect(LecturasDB dblect) {this.dblect = dblect;}
 
-    public void BuscarLecturasUrl(final Context BaseContext, View view, AppCompatActivity activity){
+    public void BuscarLecturasUrl(final Context BaseContext, final View view, AppCompatActivity activity){
         final ctrservices miservice = this.getMiservice();
 
         final ProgressDialog pd;
@@ -147,8 +152,8 @@ public class ctrPrincipal {
 
                     }
 //                    Log.d("LECTURAS", "AAAABrir");
-                    Intent intent = new Intent(BaseContext, lecturasbrw.class);
-                    BaseContext.startActivity(intent);
+                    Intent intent = new Intent(ctrPrincipal.this.getContext(), lecturasbrw.class);
+                    view.getContext().startActivity(intent);
                 } catch (JSONException e) {
                     e.printStackTrace();
                     //Toast.makeText(BaseContext, e.getMessage(), Toast.LENGTH_LONG).show();
@@ -175,7 +180,7 @@ public class ctrPrincipal {
         return AFacDatos;
     }
 
-    public void BuscarFacturasUrl(final Context BaseContext, View view, AppCompatActivity activity){
+    public void BuscarFacturasUrl(final Context BaseContext, final View view, AppCompatActivity activity){
 
         final ctrservices miservice = this.getMiservice();
         miservice.setBaseContext(BaseContext);
@@ -216,8 +221,8 @@ public class ctrPrincipal {
                         dbfact.guardarFactura(fact);
 
                     }
-                    Intent intent = new Intent(BaseContext, listado.class);
-                    BaseContext.startActivity(intent);
+                    Intent intent = new Intent(ctrPrincipal.this.getContext(), listado.class);
+                    view.getContext().startActivity(intent);
 
 
                 } catch (JSONException e) {
@@ -235,7 +240,7 @@ public class ctrPrincipal {
 
     public void setDatoslect(ArrayList<lecturas> datoslect) {this.datoslect = datoslect;}
 
-    public void Ingresar(final Context BaseContext, View view, Editable nCli, Editable pass, MainActivity mainActivity){
+    public void Ingresar(final Context BaseContext, final View view, Editable nCli, Editable pass, MainActivity mainActivity){
         final ctrservices miservice = this.getMiservice();
 
         String miurl = "http://"+mictrPrincipal.getMiEmp().host+"/validar/";
@@ -253,6 +258,7 @@ public class ctrPrincipal {
         pd.setMessage("Aguarde unos instantes...");
         pd.setIndeterminate(false);
         pd.setCancelable(false);
+
         pd.show();
         miservice.Loggin(BaseContext, view, nCli, pass);
 
@@ -266,24 +272,35 @@ public class ctrPrincipal {
 
                 String id = "-1";
                 String msj = "Error desconocido.";
-                
+
+
 
                 try {
 
                     //pd.dismiss();
                     //Log.d("Ingresar Crtprincipal",miservice.getRespuestas());
-                    //Toast.makeText(BaseContext, miservice.getRespuestas(), Toast.LENGTH_LONG).show();
-                    JSONArray respuesta = new JSONArray(miservice.getRespuestas());
-                    for (i = 0; i < respuesta.length(); i++) {
 
+                    JSONArray respuesta = null;
+
+                    respuesta = new JSONArray(miservice.getRespuestas());
+
+
+
+                    for (i = 0; i < respuesta.length(); i++) {
+                        Log.d("Login", String.valueOf(i));
                         JSONObject jsonobject = respuesta.getJSONObject(i);
                         id = jsonobject.getString("Id");
                         msj = jsonobject.getString("empresa");
-                        //Log.d("Login",jsonobject.getString("Id"));
+
+                        //Toast.makeText(BaseContext, "Prueba 2", Toast.LENGTH_LONG).show();
                     }
+//                    Toast.makeText(BaseContext, "Prueba 3", Toast.LENGTH_LONG).show();
                     if (id.equals("-1")) {
-                        Toast.makeText(BaseContext, msj, Toast.LENGTH_LONG).show();
+                        Snackbar.make(view, msj, Snackbar.LENGTH_LONG).setAction("Action", null).show();
+
+
                     } else {
+
                         //Auxiliares miauxi = new Auxiliares();
                         miAuxi.setdesdeJSONArray(respuesta);
                         midatosdsn.setdesdeJSONArray(respuesta);
@@ -292,16 +309,17 @@ public class ctrPrincipal {
 
                             mictrPrincipal.getDbauxi().ActualizarAuxi(miAuxi);
                             mictrPrincipal.setMiAuxi(miAuxi);
+                            mictrPrincipal.setIngreso(true);
 
+                            Intent intent = new Intent(ctrPrincipal.this.getContext(), activity_Welcome.class);
+                            view.getContext().startActivity(intent);
 
-                            Intent intent = new Intent(BaseContext, activity_Welcome.class);
-                            BaseContext.startActivity(intent);
                         }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
 
-                    Toast.makeText(BaseContext, msj, Toast.LENGTH_LONG).show();
+                    //Toast.makeText(BaseContext, msj, Toast.LENGTH_LONG).show();
                 }
 
                 pd.dismiss();

@@ -1,7 +1,6 @@
 package ar.com.erzsoftware.eruralmovil;
 
 import android.content.Intent;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,29 +9,19 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ExpandableListView;
-import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
-
-import javax.crypto.SecretKey;
 
 import ar.com.erzsoftware.eruralmovil.controladores.ctrPrincipal;
 import ar.com.erzsoftware.eruralmovil.modelos.Auxiliares;
-import ar.com.erzsoftware.eruralmovil.modelos.Factura;
-import ar.com.erzsoftware.eruralmovil.modelos.MisFacturas;
-import ar.com.erzsoftware.eruralmovil.modelos.MisReclamos;
+import ar.com.erzsoftware.eruralmovil.BaseAdapters.MisReclamos;
 import ar.com.erzsoftware.eruralmovil.modelos.firereclamos;
 
 public class reclamosbrw extends AppCompatActivity {

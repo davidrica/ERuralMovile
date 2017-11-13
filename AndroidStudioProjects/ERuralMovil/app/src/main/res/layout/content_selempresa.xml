@@ -12,7 +12,7 @@
         android:layout_gravity="bottom"
         android:layout_margin="16dp"
         android:layout_weight="1"
-        android:onClick="ReclamosCerrar"
+        android:onClick="SelempresaCerrar"
         app:backgroundTint="@color/colorPrimaryDark"
         app:fabSize="normal"
         app:srcCompat="@android:drawable/ic_menu_revert"

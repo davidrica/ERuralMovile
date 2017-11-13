@@ -1,40 +1,19 @@
 package ar.com.erzsoftware.eruralmovil;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Environment;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import ar.com.erzsoftware.eruralmovil.BaseAdapters.MiselEmpresaBaseAdapter;
 import ar.com.erzsoftware.eruralmovil.controladores.ctrPrincipal;
-import ar.com.erzsoftware.eruralmovil.controladores.ctrservices;
-import ar.com.erzsoftware.eruralmovil.modelos.Factura;
-import ar.com.erzsoftware.eruralmovil.modelos.FacturaPDF;
-import ar.com.erzsoftware.eruralmovil.modelos.MisReclamos;
 import ar.com.erzsoftware.eruralmovil.modelos.empresa;
-import ar.com.erzsoftware.eruralmovil.modelos.firereclamos;
 
 public class selempresa extends AppCompatActivity {
     public final static ctrPrincipal mictrPrincipal = MainActivity.mictrPrincipal;
@@ -98,4 +77,6 @@ public class selempresa extends AppCompatActivity {
         }
 
     }
+
+    public void SelempresaCerrar(View view){        finish();    }
 }

@@ -74,6 +74,6 @@ public class reclamosadd extends AppCompatActivity {
 
         myRef.child(mi.key).setValue(mi);
         Log.d("Firebase", "fin");
-
+        finish();
     }
 }

@@ -2,35 +2,19 @@ package ar.com.erzsoftware.eruralmovil;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.storage.StorageManager;
-import android.os.storage.StorageVolume;
-import android.print.PrintAttributes;
-import android.print.PrintDocumentInfo;
-import android.print.pdf.PrintedPdfDocument;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.util.AsyncListUtil;
 import android.util.Base64;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,26 +22,22 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.SequenceInputStream;
 import java.util.ArrayList;
 
+import ar.com.erzsoftware.eruralmovil.controladores.ctrPrincipal;
 import ar.com.erzsoftware.eruralmovil.controladores.ctrservices;
-import ar.com.erzsoftware.eruralmovil.datos.AuxiliaresDB;
 import ar.com.erzsoftware.eruralmovil.datos.FacturasDB;
-import ar.com.erzsoftware.eruralmovil.datos.erural;
 import ar.com.erzsoftware.eruralmovil.modelos.Auxiliares;
 import ar.com.erzsoftware.eruralmovil.modelos.Factura;
 import ar.com.erzsoftware.eruralmovil.modelos.FacturaPDF;
-import ar.com.erzsoftware.eruralmovil.modelos.MisFacturas;
+import ar.com.erzsoftware.eruralmovil.BaseAdapters.MisFacturas;
 
 public class listado extends AppCompatActivity {
+    public final static ctrPrincipal mictrPrincipal = MainActivity.mictrPrincipal;
 
     public final static Auxiliares miauxi = MainActivity.miauxi;
     public FacturasDB dbfact;
@@ -151,7 +131,8 @@ public class listado extends AppCompatActivity {
 //        String nro = ((Factura) listItem).getNroasto();
 
 
-        final ctrservices miservice = new ctrservices(getBaseContext());
+        //final ctrservices miservice = new ctrservices(getBaseContext());
+        final ctrservices miservice = mictrPrincipal.getMiservice();
 
         final ProgressDialog pd;
         pd = new ProgressDialog(listado.this);
@@ -255,7 +236,8 @@ public class listado extends AppCompatActivity {
     }
 
     public void FacturasActualizar(View view){
-        final ctrservices miservice = new ctrservices(getBaseContext());
+        //final ctrservices miservice = new ctrservices(getBaseContext());
+        final ctrservices miservice = mictrPrincipal.getMiservice();
 
         final ProgressDialog pd;
         pd = new ProgressDialog(listado.this);

@@ -1,23 +1,35 @@
-package ar.com.erzsoftware.eruralmovil.modelos;
+package ar.com.erzsoftware.eruralmovil.BaseAdapters;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 
+import ar.com.erzsoftware.eruralmovil.R;
+import ar.com.erzsoftware.eruralmovil.modelos.Factura;
 /**
- * Created by Administrador on 04/10/2017.
+ * Created by Administrador on 22/09/2017.
  */
-
-public abstract class MisLecturas extends BaseAdapter {
+public abstract class MisFacturas extends BaseAdapter  {
     private ArrayList<?> entradas;
     private int R_layout_IdView;
     private Context contexto;
 
-    public MisLecturas(Context contexto, int R_layout_IdView, ArrayList<?> entradas) {
+
+
+    public MisFacturas(Context contexto, int R_layout_IdView, ArrayList<?> entradas) {
         super();
         this.contexto = contexto;
         this.entradas = entradas;
@@ -54,5 +66,4 @@ public abstract class MisLecturas extends BaseAdapter {
      * @param view View particular que contendr� los datos del paquete/handler
      */
     public abstract void onEntrada (Object entrada, View view);
-
 }

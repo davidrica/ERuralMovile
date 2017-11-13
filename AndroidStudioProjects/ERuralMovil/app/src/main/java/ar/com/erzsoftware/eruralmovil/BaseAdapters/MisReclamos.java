@@ -1,4 +1,4 @@
-package ar.com.erzsoftware.eruralmovil.modelos;
+package ar.com.erzsoftware.eruralmovil.BaseAdapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
